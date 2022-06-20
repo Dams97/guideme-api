@@ -1,0 +1,29 @@
+{
+  "name": "guideme-api",
+  "version": "1.0.0",
+  "description": "##Features",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js | pino-colada"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaadAlsaif/guideme-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaadAlsaif/guideme-api/issues"
+  },
+  "homepage": "https://github.com/DaadAlsaif/guideme-api#readme",
+  "dependencies": {
+    "fastify": "^4.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16",
+    "pino": "^8.0.0",
+    "pino-colada": "^2.2.2"
+  }
+}
