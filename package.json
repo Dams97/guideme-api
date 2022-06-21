@@ -1,29 +1,25 @@
 {
-  "name": "guideme-api",
+  "name": "red3lay-api",
   "version": "1.0.0",
-  "description": "##Features",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js | pino-colada"
+    "dev": "nodemon src/index.ts | pino-colada",
+    "start": "tsc && node dist/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DaadAlsaif/guideme-api.git"
-  },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DaadAlsaif/guideme-api/issues"
-  },
-  "homepage": "https://github.com/DaadAlsaif/guideme-api#readme",
   "dependencies": {
+    "@fastify/autoload": "^5.0.0",
+    "@fastify/swagger": "^7.4.0",
     "fastify": "^4.0.3"
   },
   "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/node": "^18.0.0",
     "nodemon": "^2.0.16",
     "pino": "^8.0.0",
     "pino-colada": "^2.2.2"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "description": ""
 }
