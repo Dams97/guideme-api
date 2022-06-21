@@ -30,3 +30,4 @@ Web Server:` Fastify`
 ORM: `Prisma`
 
 DB: `Postgres`
+<img width="750" alt="Screen Shot 1443-11-22 at 4 07 40 AM" src="https://user-images.githubusercontent.com/103124310/174696828-a2b56f3c-2d1b-4f15-8fb6-3fa9a49ac0bd.png">
