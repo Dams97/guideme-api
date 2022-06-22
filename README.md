@@ -1,10 +1,9 @@
 # guideme-api
 
- guideme-api
 
  ##Features
  
-for user(tourist)
+For the user(tourist)
 
  1.Login 
 
@@ -21,6 +20,14 @@ for user(tourist)
  7.Contact tour guide
 
  8.Cancel reservation
+ 
+ For the Tour Guide
+ 
+ 1.Login
+ 
+ 2.View profile
+ 
+ 3.Update information
 
 
  ##Stack
