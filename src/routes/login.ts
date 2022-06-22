@@ -1,11 +1,23 @@
 import { FastifyInstance } from 'fastify';
 
-export default async function (server: FastifyInstance) {
+//import { Static, Type } from '@sinclair/typebox';
+
+
+
+
+	export default async function (server: FastifyInstance) {
+
+	server.put('/user/create', async (request, reply) => {
+		return 'user created';
+	});
 	server.get('/login', async (request, reply) => {
-		return 'you are logged';
+		return 'hi';
 	});
 
 	server.get('/verify', async (request, reply) => {
-		return 'hello';
+		return 'welcome';
 	});
+	
+
+
 }
