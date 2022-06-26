@@ -21,7 +21,7 @@ server.register(fastifySwagger, {
 	mode: 'dynamic',
 	openapi: {
 		info: {
-			title: 'Red3lay API',
+			title: 'GuideMe Api',
 			version: '0.0.1',
 		},
 	},

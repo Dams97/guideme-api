@@ -1,23 +1,15 @@
 import { FastifyInstance } from 'fastify';
+import * as bcrypt from 'bcrypt';
 
-//import { Static, Type } from '@sinclair/typebox';
+//const jwt = require('jsonwebtoken');
 
 
-
-
-	export default async function (server: FastifyInstance) {
-
-	server.put('/user/create', async (request, reply) => {
-		return 'user created';
-	});
+export default async function (server: FastifyInstance) {
 	server.get('/login', async (request, reply) => {
 		return 'hi';
 	});
 
 	server.get('/verify', async (request, reply) => {
-		return 'welcome';
+		return 'hi';
 	});
-	
-
-
 }

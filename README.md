@@ -1,48 +1,26 @@
-# guideme-api
+# Red3lay API
 
+## Features
+1. Login
+2. Create contact
+3. Update contact
+4. Delete contact
+5. View all contacts
+6. Search contacts by name
 
- ##Features
- 
-For the user(tourist)
+## Stack
+1. Runtime Environment: `Node.js`
+2. Language: `TypeScript`
+3. Web Server: `Fastify`
+4. ORM: `Prisma`
+5. DB: `Postgres`
 
- 1.Login 
+## Requirements
+1. At least 10 endpoints
+2. Authentication (JWT)
+3. Validation
+4. No Supabase
+5. Deployed to AWS or Heroku
 
- 2.Choose City to visit
-
- 3.View all Tour Guides
-
- 4.Search Tour Guides by .
-
- 5.Reserve tour guide
-
- 6.Update profile.
-
- 7.Contact tour guide
-
- 8.Cancel reservation
- 
- For the Tour Guide
- 
- 1.Login
- 
- 2.View profile
- 
- 3.Update information
-
-
- ##Stack
-
- Runtime Environment: `Node.js`
-
- Language: `JavaScript`
-
- Web Server:` Fastify`
-
- ORM: `Prisma`
-
- DB: `Postgres`
-
-
-
-
- <img width="750" alt="Screen Shot 1443-11-22 at 4 07 40 AM" src="https://user-images.githubusercontent.com/103124310/174696828-a2b56f3c-2d1b-4f15-8fb6-3fa9a49ac0bd.png">
+## Deadline
+Wednesday 29 June
