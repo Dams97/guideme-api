@@ -1,6 +1,6 @@
 # GuideMe-api
 
-##Description
+## Description
 
 "Guide Me"is a website application that contains a database of both tour guides and tourist’s information that allow the tourists and help them to make an online reservation in an easy and fast way. The app stands on list of tour guides all around Saudi Arabia by combining them together in a single application with the information and details of each tour guide. The tourist can see the advantages of each tour guide and the prices directly via app before confirming booking. The search for the tour guide can be done by location, price, experience, age and other features.
 
@@ -39,4 +39,4 @@
 5. DB: `Postgres`
 
 
-<img width="700" alt="Screen Shot 1443-11-27 at 5 12 09 AM" src="https://user-images.githubusercontent.com/103124310/175797194-19dc5104-78f8-4891-a7b1-a5b9ad56a59a.png">
+<img width="718" alt="Screen Shot 1443-11-27 at 5 46 51 AM" src="https://user-images.githubusercontent.com/103124310/175797248-2d4188f7-f55c-468b-8015-26f06d125696.png">
