@@ -6,27 +6,28 @@
 
 ## Features
 (Tourist)
-1. The ability to register.
-2.The ability to login with email and password.
-3.Update Information
-4.View all Tour guides 
-5.Display Tour guide
-6.Search for a Tour guides by location, price, experience, age and other features.
-8.Reserve a tour guide.
-9.Cancelling the reservation.
-10.Rate Tour guide.
-11.Cancel membership.
+
+1. The ability to register
+2. The ability to login with email and password
+3. Update Information
+4. View all Tour guides 
+5. Display Tour guide
+6. Search for a Tour guides by location, price, experience, age and other features
+8. Reserve a tour guide
+9. Cancelling the reservation
+10. Rate Tour guide
+11. Cancel membership
 
 
 
 (Tour Guide)
-1. The ability to register .
-2.The ability to login with email and password.
-3.Update Information
-4.View all requests of reservation.
-5.Accept/Decline reservation request.
-6.Cancelling the reservation.
-8.Cancel membership.
+1. The ability to register 
+2. The ability to login with email and password
+3. Update Information
+4. View all requests of reservation
+5. Accept/Decline reservation request
+6. Cancelling the reservation
+8. Cancel membership
 
 
 
