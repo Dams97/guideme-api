@@ -38,12 +38,5 @@
 4. ORM: `Prisma`
 5. DB: `Postgres`
 
-## Requirements
-1. At least 10 endpoints
-2. Authentication (JWT)
-3. Validation
-4. No Supabase
-5. Deployed to AWS or Heroku
 
-## Deadline
-Wednesday 29 June
+<img width="700" alt="Screen Shot 1443-11-27 at 5 12 09 AM" src="https://user-images.githubusercontent.com/103124310/175797194-19dc5104-78f8-4891-a7b1-a5b9ad56a59a.png">
