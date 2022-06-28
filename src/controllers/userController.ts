@@ -1,5 +1,5 @@
 export function upsertTouristController(tourist: any[], newUser: any) {
-	const userIndex = tourist.findIndex((el) => el.id === newUser.id);
+	const userIndex = tourist.findIndex((el) => el.user_id === newUser.id);
 	if (userIndex === -1) {
 		tourist.push(newUser);
 	} else {

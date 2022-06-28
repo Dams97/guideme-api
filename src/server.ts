@@ -1,4 +1,5 @@
 import fastifyAutoload from '@fastify/autoload';
+import fastifySensible from '@fastify/sensible';
 import fastifySwagger from '@fastify/swagger';
 import { ajvTypeBoxPlugin, TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import fastify from 'fastify';
@@ -21,12 +22,26 @@ server.register(fastifySwagger, {
 	mode: 'dynamic',
 	openapi: {
 		info: {
-			title: 'GuideMe Api',
+			title: 'Red3lay API',
 			version: '0.0.1',
 		},
 	},
 });
-
+server.register(fastifySensible);
 server.register(fastifyAutoload, {
 	dir: join(__dirname, 'routes'),
 });
+
+const port: any = process.env.PORT ?? process.env.$PORT ?? 3002;
+
+export function listen() {
+	server
+		.listen({
+			port: port,
+			host: '0.0.0.0',
+		})
+		.catch((err) => {
+			server.log.error(err);
+			process.exit(1);
+		});
+}
