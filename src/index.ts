@@ -1,6 +1,6 @@
-//import { EmployeeRole, OrderPayment } from '@prisma/client';
-import { BookPayment, Languages, Status } from '@prisma/client';
+
 import { connectDb, prismaClient } from './prisma';
+
 import { listen } from './server';
 
 async function start() {
@@ -9,6 +9,7 @@ async function start() {
 	//test();
 }
 start();
+
 
 // async function test() {
 // 	await prismaClient.user.create({

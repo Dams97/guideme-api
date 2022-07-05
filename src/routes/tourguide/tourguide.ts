@@ -1,18 +1,20 @@
 import { prismaClient } from '../../prisma';
 import { FastifyInstance } from "fastify";
 import { Static,Type } from "@sinclair/typebox";
-import { Languages,Tourguide } from "@prisma/client";
+import { Languages,Rate,Tourguide } from "@prisma/client";
 import { ObjectId } from 'bson';
+import _, { constant } from 'lodash';
 //import { Review } from '../reviews/reviews';
 
 
 
- const TourGuide=Type.Object({
+ export const TourGuide=Type.Object({
     tourguide_id:Type.String(),
     name:Type.String(),
     email:Type.String(),
+    // password:Type.String(),
     phone:Type.String(),
-    languages:Type.Enum(Languages),
+    languages:Type.Array(Type.Enum(Languages)),
     experience:Type.String(),
     city:Type.String(),
     price:Type.String(),
@@ -21,12 +23,28 @@ import { ObjectId } from 'bson';
 
     
 });
+export type TourGuide=Static<typeof TourGuide>
+export const createGuideSchema=Type.Object({
+    name:Type.String(),
+    email:Type.String(),
+    password:Type.String(),
+    phone:Type.String(),
+    city:Type.String()
+    //reservations:Type.Array(Reserv),
+   //comments:Type.Array(Comment)
 
+    
+});
+export type createGuideSchema=Static<typeof createGuideSchema>
+export const tourguideIdParams=Type.Object({
+    tourguide_id:Type.String()
+})
+export type tourguideIdParams=Static<typeof tourguideIdParams>
 // type Tourguide=Static<typeof Tourguide>
-export let tourGuide:Tourguide[]=[
-    {tourguide_id:new ObjectId().toHexString(),name:'Ahmad',
-email:'ahm@test',phone:'345',languages:'arabic',experience:'3years',city:'Jeddah',price:'1000SR'}
-]
+// export let tourGuide:Tourguide[]=[
+//     {tourguide_id:new ObjectId().toHexString(),name:'Ahmad',
+// email:'ahm@test',phone:'345',languages:['Arabic'],experience:'3years',city:'Jeddah',price:'1000SR'}
+// ]
 // const GetGuideQuery = Type.Object({
 // 	city: Type.Optional(Type.String()),
    
@@ -35,21 +53,86 @@ email:'ahm@test',phone:'345',languages:'arabic',experience:'3years',city:'Jeddah
 
 
 
+
 export default async function (server: FastifyInstance) {
-    server.route({
-        method: 'PUT',
-        url: '/tourguide/create',
-        schema: {
-            summary: 'Creates new Tour Guide',
-            tags: ['TourGuide'],
-            body: TourGuide,
-        },
-        handler:async(request,reply)=>{
-            const newtourGuide=request.body as Tourguide;
-            if(!ObjectId.isValid(newtourGuide.tourguide_id)){
-                reply.badRequest('id not valid')
-            }return
-        }})
+// server.route({
+//     method: 'POST',
+//     url: '/create',
+//     schema: {
+//         summary: 'Creates new tourist',
+//         tags: ['TourGuide'],
+//         body:createGuideSchema,
+//     },
+//     handler: async (request, reply) => {
+//         const insertGuide = request.body as createGuideSchema;
+//         return await prismaClient.tourguide.create({
+//             data:insertGuide
+//         });
+//     },
+// }),
+        server.route({
+            method:'GET',
+            url:'/',
+            schema:{
+                summary:'view all tour guides',
+                tags:['TourGuide'],
+            },
+                handler:async(request,reply)=>{
+                
+                    return await prismaClient.tourguide.findMany();  
+                    
+                }}),
+                // server.route({
+                //     method: 'PATCH',
+                //     url: '/:tourguide_id',
+                //     schema: {
+                //         summary: 'Update a tour guide by id + you dont need to pass all properties',
+                //         tags: ['TourGuide'],
+                //         body:Type.Partial(TourGuide),
+                //         params:tourguideIdParams
+                      
+                //     },
+                //     handler: async (request, reply) => {
+                //         const { tourguide_id } = request.params as tourguideIdParams;
+                //         if (!ObjectId.isValid(tourguide_id)) {
+                //             reply.badRequest('tourguide_id should be an ObjectId!');
+                //             return;
+                //         }
+                //         const guideUpdate = request.body as any ;
+            
+                //         return prismaClient.tourguide.update({
+                //             where: { tourguide_id },
+                //             data: guideUpdate,
+                //         })}
+                //     }),
+                
+                    
+                      server.route({
+                        method:'DELETE',
+                        url:'/:tourguide_id',
+                        schema:{
+                            summary:'Deletes a tour guide',
+                            tags:['TourGuide'],
+                            params:tourguideIdParams,
+                
+                        },
+                            handler:async(request,reply)=>{
+                                const {tourguide_id}=request.params as tourguideIdParams;
+                                if(!ObjectId.isValid(tourguide_id)){
+                                    reply.badRequest('invalid id')
+                                return ;
+                            }
+                                
+              
+                                return await prismaClient.tourguide.delete({
+                                    where:{tourguide_id},
+                                })
+                
+                            }
+                          })
+
+
+            
 }
     // server.route({
     //     method: 'PUT',

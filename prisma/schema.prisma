@@ -7,25 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  user_id      String        @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  email        String
-  phone        String
-  country      String
+model Tourist {
+  tourist_id   String        @id @default(auto()) @map("_id") @db.ObjectId
+  email        String        @unique
+  name         String?
+  password     String
+  phone        String?
+  country      String?
+
   reservations Reservation[]
   my_reviews   Review[]
 
-  @@map("users")
+  @@map("tourits")
 }
 
 //------------------------------
 model Tourguide {
   tourguide_id  String        @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  email         String
-  phone         String
-  languages     Languages?
+  email         String        @unique
+  name          String?
+  password      String
+  phone         String?
+  languages     Languages[]
   experience    String?
   city          String?
   price         String?
@@ -36,25 +39,31 @@ model Tourguide {
   @@map("tourguides")
 }
 
+enum Role {
+  tourguide
+  tourist
+}
+
 enum Languages {
-  arabic
-  english
-  french
-  spanish
-  turkish
+  Arabic
+  English
+  French
+  Spanish
+  Turkish
 
 }
 
 //---------------------------------
 model Reservation {
   booking_id     String      @id @default(auto()) @map("_id") @db.ObjectId
-  booking_status Status
+  booking_status Status      @default(pending)
   payment        BookPayment
-  created_at     DateTime    @default(now())
-  user_id        String?     @db.ObjectId
-  User           User?       @relation(fields: [user_id], references: [user_id])
-  tourguide      Tourguide   @relation(fields: [tourguide_id], references: [tourguide_id])
-  tourguide_id   String      @db.ObjectId
+  date           DateTime?
+  created_at     DateTime?   @default(now())
+  tourist_id     String     @db.ObjectId
+  tourist        Tourist    @relation(fields: [tourist_id], references: [tourist_id])
+  tourguide      Tourguide?  @relation(fields: [tourguide_id], references: [tourguide_id])
+  tourguide_id   String ?   @db.ObjectId
 
   @@map("reservations")
 }
@@ -72,17 +81,18 @@ enum BookPayment {
 }
 
 model Review {
-  review_id    String     @id @default(auto()) @map("_id") @db.ObjectId
+  review_id    String    @id @default(auto()) @map("_id") @db.ObjectId
   rate         Rate
-  User         User?      @relation(fields: [user_id], references: [user_id])
-  user_id      String?    @db.ObjectId
-  Tourguide    Tourguide? @relation(fields: [tourguide_id], references: [tourguide_id])
-  tourguide_id String?    @db.ObjectId
+  created_at   DateTime  @default(now())
+  tourist_id   String    @db.ObjectId
+  tourist      Tourist   @relation(fields: [tourist_id], references: [tourist_id])
+  tourguide    Tourguide @relation(fields: [tourguide_id], references: [tourguide_id])
+  tourguide_id String    @db.ObjectId
 }
 
 enum Rate {
-  Poor
-  Good
+  poor
+  good
   veryGood
-  Excellent
+  excellent
 }
