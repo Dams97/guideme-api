@@ -3,9 +3,10 @@ import { Static,Type } from "@sinclair/typebox";
 import { ObjectId } from "bson";
 import { FastifyInstance } from "fastify";
 import { prismaClient } from "../../prisma";
-import _ from "lodash";
+import _, { result } from "lodash";
 import { timeStamp } from "console";
 import { BookPayment, Status, Tourist } from "@prisma/client";
+import { JwtVerificationSchema } from "../tourist/touristmakeRes";
 
 
 
@@ -25,7 +26,7 @@ import { BookPayment, Status, Tourist } from "@prisma/client";
         date:           Type.String({format:"date-time"}),
         created_at:Type.String(timeStamp),
         payment:        Type.Enum(BookPayment),
-        tourist_id:     Type.String(),
+        //tourist_id:     Type.String(),
         tourguide_id:   Type.String()
     
         })
@@ -37,52 +38,37 @@ export const resIdParams=Type.Object({
 export type resIdParams=Static<typeof resIdParams>
 export type Reservation=Static<typeof Reservation>
 
-// export let res:Reservation[]=[
-//     {booking_id:new ObjectId().toHexString(),
-//     booking_status:'pending',
-//     payment:'card',
-//     created_at:new Date,
-//     tourist_id:new ObjectId().toHexString(),
-//     tourguide_id:new ObjectId().toHexString(),
 
-//     }
-// ];
+
+
 export default async function(server:FastifyInstance){
-    server.route({
-        method: 'PUT',
-        url: '/create',
-        schema: {
-            summary: 'Creates a new reservation+all properties are required',
-            tags: ['Reservation'],
-            body: Reservation,
-        },
-        handler:async(request,reply)=>{
-            const newRes=request.body as any ;
-            if(!ObjectId.isValid(newRes.booking_id)){
-                reply.badRequest('booking_id should be an ObjectId!')
-            }else
-            return await prismaClient.reservation.upsert({
-                where:{booking_id:newRes.booking_id},
-                create:{..._.omit(newRes,['tourist_id'])as any,
-            tourist:{
-                connect:{tourist_id:newRes.tourist_id}
-            },
-            //create:{data{.....}}
-            //connect:[{user_id:....},{user_id:....}]
-            //createORconnect{{
-            //     create:{data}
-            //     connect:{}
-            // }}
-            // Tourguide:{
-            //     connect:{tourguide_id:newRes.booking_id}
-            // },
-        },
-        update:_.omit(newRes,['booking_id']),
+//     server.route({
+//         method: 'PUT',
+//         url: '/create',
+//         schema: {
+//             summary: 'Creates a new reservation+all properties are required',
+//             tags: ['Reservation'],
+//             body: Reservation,
+//         },
+//         handler:async(request,reply)=>{
+//             const newRes=request.body as any ;
+//             if(!ObjectId.isValid(newRes.booking_id)){
+//                 reply.badRequest('booking_id should be an ObjectId!')
+//             }else
+//             return await prismaClient.reservation.upsert({
+//                 where:{booking_id:newRes.booking_id},
+//                 create:{..._.omit(newRes,['tourist_id'])as any,
+//             tourist:{
+//                 connect:{tourist_id:newRes.tourist_id}
+//             },
+          
+//         },
+//         update:_.omit(newRes,['booking_id']),
         
 
-})
-        }
-    }),
+// })
+//         }
+//     }),
     server.route({
 		method: 'GET',
 		url: '/myres/:booking_id',
@@ -128,115 +114,26 @@ export default async function(server:FastifyInstance){
                     summary: 'Creates a new reservation+all properties are required',
                     tags: ['Reservation'],
                     body: Type.Partial(resWithoutId),
+                    headers:JwtVerificationSchema,
 
                 },
                 handler:async(request,reply)=>{
-                    const newRes=request.body as any ;
-               
-                    return await prismaClient.reservation.create({
-                        data:{...newRes},
-                        
-                    //     tourist: 
-                    //  { connect: {tourist_id:newRes.tourist_id} },
-                                }
-                                )}
-                            })
-            
-//               server.route({
-//         method: 'PUT',
-//         url: 'reservatiion/create',
-//         schema: {
-//             summary: 'Creates a new reservation+all properties are required',
-//             tags: ['Reservation'],
-//             body: Reservation,
-//         },
-//         handler:async(request,reply)=>{
-//             const newRes=request.body as any ;
-//             if(!ObjectId.isValid(newRes.booking_id)){
-//                 reply.badRequest('booking_id should be an ObjectId!')
-//             }else
-//             return await prismaClient.reservation.upsert({
-//                 where:{booking_id:newRes.booking_id},
-//                 create:{..._.omit(newRes,['tourist_id'])as any,
-//             Tourist:{
-//                 connect:{tourist_id:newRes.tourist_id}
-//             },
-//         },
-//         update:_.omit(newRes,['booking_id']),
-
-// })
-//         }
-//     })
-//         }
-
-
-    // server.route({
-    //     method: 'PATCH',
-    //     url: '/reservation/:booking_id',
-    //     schema: {
-    //         summary: 'Update a reservation schedule by id ' ,
-    //         tags: ['Reservation'],
-    //         body: Type.Partial(Reservation),
-    //         params:resIdParams
-    //     },
-    //     handler: async (request, reply) => {
-    //         const { booking_id } = request.params as resIdParams;
-    //         if (!ObjectId.isValid(booking_id)) {
-    //             reply.badRequest('booking_id should be an ObjectId!');
-    //             return;
-    //         }
-    
-    //         const resUpdate = request.body as resWithoutId 
-    //         return prismaClient.reservation.update({
-    //             where: { booking_id },
-    //             data:resUpdate,
-    //         })
-    //     }
-    // }),
-
-    //      server.route({
-    //         method:'GET',
-    //         url:'/reservation/:booking_id',
-    //         schema:{
-    //             summary:'view booking info',
-    //             tags:['Reservation'],
-    //             params:resIdParams,
-    //             response:{
-    //                 '2xx':Type.Union([Reservation,Type.Null()])
-    
-    //             }},
-    //             handler:async(request,reply)=>{
-    //                 const {booking_id}=request.params as resIdParams;
-    //                 if(!ObjectId.isValid(booking_id)){
-    //                     reply.badRequest('invalid id')
-    //                 return;}
+                    const newRes=request.body as resWithoutId ;
+                    const {token}=request.headers as JwtVerificationSchema
+                        server.jwt.verify(token,async function (err,decoded){
+                            let id=decoded.id;
+                            if(id){
+                                return await prismaClient.reservation.create({
+                                    data:{
+                                      tourist_id:id,
+                                     ...newRes
+             
+                                    }
+                                    
+                                })
+                            }
+                        })
                     
-    //              return await prismaClient.reservation.findFirst({
-    //                 where:{booking_id},
-    //           })
-    //         }}),
-    //           server.route({
-    //             method:'DELETE',
-    //             url:'/delete/:booking_id',
-    //             schema:{
-    //                 summary:'cancel the reservation',
-    //                 tags:['Reservation'],
-    //                 params:resIdParams
-                  
-    //             },
-    //             handler:async(request,reply)=>{
-
-    //                  const {booking_id}=request.params as resIdParams;
-    //                 if(!ObjectId.isValid(booking_id)){
-    //                     reply.badRequest('invalid id')
-    //                 return;}
-                    
-  
-    //                 return prismaClient.reservation.delete({
-    //                     where:{booking_id},
-    //                 })
-    //             }
-    //         })
-    
-    // }
-                        }
+                     }
+                    })}
+                      

@@ -16,7 +16,7 @@ export type loginTourGuide=Static<typeof loginTourGuide>
 const JwtVerificationSchema = Type.Object({
 	token: Type.String(),
   });
-  type JwtVerificationSchema=Static<typeof JwtVerificationSchema>
+  export type JwtVerificationSchema=Static<typeof JwtVerificationSchema>
 
       //reservations:Type.Array(Reserv),
      //comments:Type.Array(Comment)

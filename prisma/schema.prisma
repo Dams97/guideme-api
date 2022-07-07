@@ -58,7 +58,7 @@ model Reservation {
   booking_id     String      @id @default(auto()) @map("_id") @db.ObjectId
   booking_status Status      @default(pending)
   payment        BookPayment
-  date           DateTime?
+  date           DateTime
   created_at     DateTime?   @default(now())
   tourist_id     String     @db.ObjectId
   tourist        Tourist    @relation(fields: [tourist_id], references: [tourist_id])
