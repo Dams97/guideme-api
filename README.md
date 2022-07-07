@@ -28,7 +28,8 @@
 5. Accept/Decline reservation request
 6. Cancelling the reservation
 8. Cancel membership
-
+ ## Heroku 
+ https://guidme-api.herokuapp.com/docs/static/index.html
 
 
 ## Stack
