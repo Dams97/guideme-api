@@ -96,3 +96,8 @@ enum Rate {
   veryGood
   excellent
 }
+model Task {
+  task_id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  input      String
+  is_checked Boolean
+}

@@ -1,11 +1,9 @@
 import { BookPayment, PrismaClient, Status } from "@prisma/client";
 import { Static, Type } from "@sinclair/typebox";
-import { ObjectId } from "bson";
-import { timeStamp } from "console";
+
 import { FastifyInstance } from "fastify";
 import { prismaClient } from "../../prisma";
-import { resWithoutId } from "../reservation/reservation";
-import { TouristIdParams } from "./userSchema";
+
 // import { JwtVerificationSchema } from "./tourist-login";
 
 export const JwtVerificationSchema = Type.Object({
@@ -14,10 +12,8 @@ export const JwtVerificationSchema = Type.Object({
   export type JwtVerificationSchema=Static<typeof JwtVerificationSchema>
 
  export const CreateReserv=Type.Object({
-    date:   Type.String({format:"date-time"}),
+    date:Type.String({format:"date-time"}),
     payment:       Type.Enum(BookPayment),
-    // created_at:Type.String(timeStamp),
-    // tourist_id:Type.String(),
     tourguide_id:Type.String()})
     export type CreateReserv=Static<typeof CreateReserv>
 export default async function (server:FastifyInstance) {
@@ -27,23 +23,27 @@ export default async function (server:FastifyInstance) {
         schema:{
             summary:'tourist make a reservation',
             tags:['Tourists'],
-            body:CreateReserv,
+            body:Type.Partial(CreateReserv),
             headers:JwtVerificationSchema
         },
         handler:async(request,reply)=>{
            const makeNewRes=request.body as CreateReserv
            const {token}=request.headers as JwtVerificationSchema
-           server.jwt.verify(token,async function name(err,decoded){
-               let id=decoded.id;
-               if(id){
-                   const result= await prismaClient.reservation.create({
+           server.jwt.verify(token,async function(err,decoded){
+               let a=decoded.id;
+               if(a){
+                  return await prismaClient.reservation.create({
                        data:{
-                         tourist_id:id,
-                        ...makeNewRes
-
+                           date:makeNewRes.date,
+                           payment:makeNewRes.payment,
+                           tourguide_id:makeNewRes.tourguide_id,
+                           tourist_id:a,
+                        // ...makeNewRes
                        }
                    })
-               }return
+               }
+               return await prismaClient.reservation.findMany();
+
            })
        
         }

@@ -8,7 +8,7 @@ import { Rate, Review } from "@prisma/client";
 
 const Reviews=Type.Object({
     review_id:Type.String(),
-    rate:Type.Enum(Rate),
+    rate:Type.String(),
     created_at:Type.String(timeStamp),
     tourist_id:Type.String(),
     tourguide_id:Type.String()
@@ -16,12 +16,7 @@ const Reviews=Type.Object({
 export const reviewParams=Type.Object({
     review_id:Type.String()
 })
-export const reviewWithoutId=Type.Object({
-    rate:Type.Enum(Rate),
-    tourist_id:Type.String(),
-    tourguide_id:Type.String()
-})
-export type reviewWithoutId=Static<typeof reviewWithoutId>
+
 // type TouristIdParams=Static<typeof TouristIdParams
  export type reviewParams=Static<typeof reviewParams>
 // export let reviews:Review[]=[

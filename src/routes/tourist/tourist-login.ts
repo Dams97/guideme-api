@@ -14,15 +14,15 @@ const loginSchema=Type.Object({
 })
 type loginSchema=Static<typeof loginSchema>
 
-  export const createUser=Type.Object({
-    email:    Type.String() ,   
-    name  :    Type.String(),   
-    password:  Type.String() ,  
-    phone:     Type.String() ,
+//   export const createUser=Type.Object({
+//     email:    Type.String() ,   
+//     name  :    Type.String(),   
+//     password:  Type.String() ,  
+//     phone:     Type.String() ,
 
-    // reservations:Type.Optional(Type.Array(Reservation))
-})
-export type createUser=Static<typeof createUser>
+ 
+// })
+// export type createUser=Static<typeof createUser>
 //login
 
 export default async function (server: FastifyInstance) {
@@ -31,54 +31,54 @@ export default async function (server: FastifyInstance) {
 		url: '/login',
 		schema: {
 			summary: 'Login a user and returns a token',
+			tags:['login'],
 			body: loginSchema,
 		},
 		handler: async (request, reply) => {
-			const { email, password } = request.body as loginSchema;
+			const user = request.body as loginSchema;
 
-			const user = await prismaClient.tourist.findFirst({
+			const userExist = await prismaClient.tourist.findFirst({
 				where: {
-					email: email,
+					email: user.email,
 				},
 			});
-			if (!user) {
+			if (!userExist) {
 				const result = await prismaClient.tourist.create({
 					data: {
-						email: email,
-						password: password,
+						email: user.email,
+						password: user.password,
 						name: '',
 						phone: '',
+						country:''
 					},
 				});
 
 				const token = server.jwt.sign({
+					email: user.email,
 					id: result.tourist_id,
-					email: result.email,
-					name: result.name,
 					
 				});
 
 				return {
-					id: result.tourist_id,
 					token,
 					type: 'SignUp',
 				};
 			} else {
-				if (user.password !== password) {
+				if (user.password !== userExist.password) {
 					reply.unauthorized();
 					return;
 				}
 
 				const token = server.jwt.sign({
-					id: user.tourist_id,
 					email: user.email,
-					name: user.name,
-					role: 'admin',
+					id: userExist.tourist_id,
+					
+				
 				});
 
 				return {
-					id: user.tourist_id,
 					token,
+					name:userExist.name,
 					type: 'SignIn',
 				};
 			}
