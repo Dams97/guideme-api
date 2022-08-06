@@ -12,7 +12,7 @@ import _, { constant } from 'lodash';
     tourguide_id:Type.String(),
     name:Type.String(),
     email:Type.String(),
-    // password:Type.String(),
+    password:Type.String(),
     phone:Type.String(),
     languages:Type.Array(Type.Enum(Languages)),
     experience:Type.String(),

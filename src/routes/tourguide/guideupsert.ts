@@ -15,7 +15,7 @@ export default async function (server: FastifyInstance) {
             body:TourGuide,
         },
         handler:async(request,reply)=>{
-            const checktourGuide=request.body as any;
+            const checktourGuide=request.body as TourGuide;
             if(!ObjectId.isValid(checktourGuide.tourguide_id)){
                 reply.badRequest('id not valid')
             } else 
