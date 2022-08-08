@@ -5,6 +5,10 @@ import fastifySwagger from '@fastify/swagger';
 import { ajvTypeBoxPlugin, TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import fastify from 'fastify';
 import { join } from 'path';
+// import cors from '@fastify/cors'
+// import cors from 'cors';
+import cors from '@fastify/cors'
+const allowedOrigins =  ['*'];
 
 
 export const server = fastify({
@@ -17,6 +21,12 @@ export const server = fastify({
 		plugins: [ajvTypeBoxPlugin],
 	},
 }).withTypeProvider<TypeBoxTypeProvider>();
+
+
+ server.register(cors, { 
+	origin:true
+  // put your options here
+})
 
 server.register(fastifyJwt,{secret:"shhhh"})
 
