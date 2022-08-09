@@ -7,7 +7,6 @@ import { prismaClient } from "../../prisma";
 // import { JwtVerificationSchema } from "./tourist-login";
 
 export const JwtVerificationSchema = Type.Object({
-    
 	token: Type.String(),
   });
   export type JwtVerificationSchema=Static<typeof JwtVerificationSchema>
@@ -20,15 +19,14 @@ export const JwtVerificationSchema = Type.Object({
 export default async function (server:FastifyInstance) {
     server.route({
         method:'POST',
-        url:'/create/reservation ',
-        
+        url:'/create/reservation',
         schema:{
             summary:'tourist make a reservation',
             tags:['Tourists'],
             body:Type.Partial(CreateReserv),
-        
+       
             headers:JwtVerificationSchema,
-          
+            
         },
         handler:async(request,reply)=>{
            const makeNewRes=request.body as CreateReserv
