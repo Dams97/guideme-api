@@ -5,9 +5,12 @@ import fastifySwagger from '@fastify/swagger';
 import { ajvTypeBoxPlugin, TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import fastify from 'fastify';
 import { join } from 'path';
-// import cors from '@fastify/cors'
-// import cors from 'cors';
 import cors from '@fastify/cors'
+
+// import authService, { JwtPayload } from "./hooks/auth.service";
+// import fastifyCookie from "@fastify/cookie";
+// import { Static, Type } from "@sinclair/typebox";
+
 const allowedOrigins =  ['*'];
 
 
@@ -39,22 +42,22 @@ server.register(fastifySwagger, {
 			title: 'Guide Me',
 			version: '0.0.1',
 		},
-		security: [
-			{
-				bearerAuth: [],
+		// security: [
+		// 	{
+		// 		bearerAuth: [],
+		// 	},
+		// ],
+		// components: {
+		// 	securitySchemes: {
+				// bearerAuth: {
+				// 	type: 'http',
+				// 	scheme: 'bearer',
+				// 	bearerFormat: 'JWT',
+				// },
 			},
-		],
-		components: {
-			securitySchemes: {
-				bearerAuth: {
-					type: 'http',
-					scheme: 'bearer',
-					bearerFormat: 'JWT',
-				},
-			},
-		},
-	},
-});
+		}),
+	// },
+// });
 server.register(fastifySensible);
 server.register(fastifyAutoload, {
 	dir: join(__dirname, 'routes'),
